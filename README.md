@@ -17,9 +17,17 @@ Technology still relies on the HTTP protocol (althaugh HTTP2 is on its way) for 
 
 
 
-[Graph Outlook on Codepen](http://codepen.io/pigne/pen/meyVvz)
 ![Graph Outlook](img/outlook.png)
+[Graph Outlook on Codepen](http://codepen.io/pigne/pen/meyVvz)
 
 ## Prerequisite
 
-- Good level in
+- Good level in an object-oriented programming language
+- Basic knowledge in [HTML](https://developer.mozilla.org/en-US/Learn/HTML) and [CSS](https://developer.mozilla.org/en-US/Learn/CSS).
+- Basic knowledge in system command line manipulations.
+
+
+
+## Oultook
+
+1. (Tools Prerequisite)[prerequisite.md]. 

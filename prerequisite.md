@@ -21,23 +21,23 @@ One ***need*** a decent text editor with at least those features :
 -	**Windows only**: NotePad++, UltraEdit, Dreamweaver
 -	**Mac only**: TextMate, Coda, Textwrangler
 -	**Linux only**: Gedit
--	:cloud: **Could Based**: Cloud9, Codeanywhere, Koding
+-	:cloud: **Cloud Based**: Cloud9, Codeanywhere, Koding
 -	:heart: **The ones you should use ;-)**: Sublime Text, Brackets, Atom
 
 Web Browser Developer tools
 ---------------------------
 
-A good project has to be tested on all major browsers. It is however to do it during development. Tip: change your default browser every week or so.
+A good project has to be tested on all major browsers. It is however difficult to do it during development. Tip: change your default browser every week or so.
 
 ### Dev-channels and Developer-dedicated browsers
 
-Main browsers provide version of browser with latest features and/or tuned for devs.
+Main browsers provide versions of browser with latest features and/or tuned for developers.
 
 -	Chromium Dev Channel
 
 	-	https://www.chromium.org/getting-involved/dev-channel
 
--	Chrome Canary (Windows )
+-	Chrome Canary
 
 	-	Windows and Mac only.
 	-	Uses different profiles than main Chrome/Chromium installs. You can have both installed.
@@ -106,7 +106,7 @@ sudo apt-get install nodejs
 Code Quality Control
 --------------------
 
-JavaSript is an interpreted language. No compilation. Errors are raised at runtime. A syntactic analysis usually helps. Several tools help controlling your code quality:
+JavaScript is an interpreted language. No compilation. Errors are raised at runtime. A syntactic analysis usually helps. Several tools help controlling your code quality:
 
 -	[JSLint](http://www.jslint.com/)
 -	[JSHint](http://jshint.com/)
@@ -137,7 +137,7 @@ Code Versioning
 
 Any project should be hosted on a versioning system. Free services like Github, BitBucket, GitLab, etc., are used to:
 
--	host public/private projects source repository
+-	host public/private projects source code
 -	launch automated tests
 -	host projects public web sites
 -	build your own portfolio

@@ -1,5 +1,5 @@
-JavaSript Basics
-================
+# JavaSript Basics
+
 
 In a nutshell:
 
@@ -13,8 +13,79 @@ In a nutshell:
 
 Below is a detailed overview of the basis of the language. This presentation is heavily based on <cite><a href='http://www.maritimejournal.com/__data/assets/pdf_file/0020/1033940/Javascript-The-Good-Parts.pdf'>JavaScript: The Good Parts</a></cite> by Douglas Crockford. This more or less correspond to the fift version of the ECMAScript standard (ES5). The sixth version ES6 or ES2015 has many new features (classes, modules, arrow functions, etc.) that are not described here.
 
-Syntax
-------
+
+<!-- TOC depth:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+
+- [JavaSript Basics](#javasript-basics)
+	- [Syntax](#syntax)
+		- [Variables](#variables)
+		- [Comments](#comments)
+		- [Names](#names)
+		- [Reserved Words](#reserved-words)
+	- [Numbers](#numbers)
+		- [Numbers Encoding Format](#numbers-encoding-format)
+		- [NaN](#nan)
+		- [Infinity](#infinity)
+		- [Utility functions](#utility-functions)
+		- [Parse Strings to Numbers](#parse-strings-to-numbers)
+	- [Strings](#strings)
+		- [String Literals](#string-literals)
+		- [Escaped Characters](#escaped-characters)
+		- [unicode](#unicode)
+		- [Concatenation](#concatenation)
+		- [Length](#length)
+		- [String Methods](#string-methods)
+	- [Control Flow](#control-flow)
+		- [if/else](#ifelse)
+		- [for](#for)
+		- [while](#while)
+		- [switch](#switch)
+	- [Expressions](#expressions)
+		- [Operators Precedence](#operators-precedence)
+		- [Refinement](#refinement)
+		- [Invocation](#invocation)
+		- [Objects](#objects)
+		- [Arrays](#arrays)
+		- [Regexp (borrowed from perl)](#regexp-borrowed-from-perl)
+		- [Functions](#functions)
+		- [Anonymous functions](#anonymous-functions)
+	- [Scope](#scope)
+	- [Strict Mode](#strict-mode)
+	- [Objects](#objects)
+		- [Object Literal](#object-literal)
+		- [Access to properties](#access-to-properties)
+		- [Objects are passed by reference](#objects-are-passed-by-reference)
+	- [Prototype](#prototype)
+		- [Constructor Functions](#constructor-functions)
+		- [The `new` operator](#the-new-operator)
+		- [Dealing  with properties of an object](#dealing-with-properties-of-an-object)
+		- [Augmenting Default Types](#augmenting-default-types)
+	- [Functions](#functions)
+		- [Functions Arguments](#functions-arguments)
+		- [Functions used as _methods_](#functions-used-as-methods)
+		- [Functions used as _functions_](#functions-used-as-functions)
+		- [Functions used as constructors](#functions-used-as-constructors)
+		- [Functions invoked with a different context](#functions-invoked-with-a-different-context)
+		- [IIFE Immediately Invoked Function Expressions](#iife-immediately-invoked-function-expressions)
+	- [Exceptions](#exceptions)
+	- [Recursion](#recursion)
+	- [Closure](#closure)
+		- [Closure to Hide Singletons](#closure-to-hide-singletons)
+		- [Closure to Make Safe Objects](#closure-to-make-safe-objects)
+		- [Closure to Make Modules](#closure-to-make-modules)
+	- [Objects & Inheritance](#objects-inheritance)
+		- [Classical Pattern](#classical-pattern)
+		- [The ECMASript 5 Pattern](#the-ecmasript-5-pattern)
+		- [The Differential Pattern](#the-differential-pattern)
+		- [The Functional Pattern](#the-functional-pattern)
+	- [Arrays](#arrays)
+	- [Regexp](#regexp)
+	- [JSON](#json)
+<!-- /TOC -->
+
+
+## Syntax
+
 
 JavaSript has a c-based syntax with lots of idioms borrowed from Java.
 
@@ -48,8 +119,7 @@ Most of them are not used.
 
 `abstract boolean break byte case catch char class const continue debugger default delete do double else enum export extends false final finally float for function goto if implements import in instanceof int interface long native new null package private protected public return short static super switch synchronized this throw throws  transient true try typeof var volatile void while with`
 
-Numbers
--------
+## Numbers
 
 `Number` is the single type for all numerical values. No integers, float, double, etc. Only numbers. A number is composed of :
 
@@ -107,14 +177,14 @@ parseInt('08'); // 0 -> leading 0 is understood as octal base
 parseInt('08', 10); // 8 -> always give the base!!!
 ```
 
-Strings
--------
+## Strings
+
 
 Strings are immutable objects.
 
 ### String Literals
 
-Written between single or double quotes ( 'this string', 'that string').
+Written between single or double quotes ( 'this string', "that string").
 
 -	The empty string '' is allowed (0 characters).
 -	No char type. We use one-character strings ( 'a').
@@ -176,8 +246,8 @@ s1.replace('/', ' ≠ '); // 'ok ≠ ko'
 String.fromCharCode(74, 83) // 'JS'
 ```
 
-Control Flow
-------------
+## Control Flow
+
 
 Classical C-Style Block statements.
 
@@ -227,8 +297,8 @@ switch (expression) {
 }
 ```
 
-Expressions
------------
+## Expressions
+
 
 Literals, names, operators and other expressions.
 
@@ -302,8 +372,35 @@ some_function(p1, p2, function(){
 });
 ```
 
-Strict Mode
------------
+
+
+## Scope
+Although being a block-based syntax language, JavaSript does not have block scope. Javascript has **function scope**.
+
+Functions get access to the context (surrounding variables) they are defined within.
+
+```javascript
+function f () {
+    var a = 10, b = 2;
+    function f2() {
+        var b = 20, c = 2;
+        // a : 10,  b : 20,  c : 2
+    }
+    f2();
+    // a : 10,  b : 2,  'c' exists but is undefined
+    if (a > 0) {
+        var c = 34;
+        b = 25;
+        // a : 10, b : 25, c : 34
+    }
+    // a : 10, b : 25, c : 34
+}
+f();
+```
+[A function scope extended example.](http://codepen.io/pigne/pen/LhHEo)
+
+## Strict Mode
+
 
 Strict Mode is a restricted variant of Javascript defined in EcmaScript 5. It is activated per-function adding the string `'strict mode';` in the body of the function.
 
@@ -342,8 +439,8 @@ function myFunction(){
 
 -	Use of restricted words raises errors (class, enum, export, extends, import, super)
 
-Objects
--------
+## Objects
+
 
 -	Numbers, strings, booleans, `null` and `undefined` are simple and immutable types.
 -	All other values are **objects**.
@@ -380,8 +477,8 @@ w['°C']=34;
 w2['°C']; // 34
 ```
 
-Prototype
----------
+## Prototype
+
 
 -	Every object inherits properties from a *prototype object*.
 -	Object literals are linked to `Object.prototype`.
@@ -509,8 +606,33 @@ delete p1.x; // true
 p1.x; // undefined
 ```
 
-Functions
----------
+
+
+### Augmenting Default Types
+
+Preexisting objects also have a prototype link that can be accessed.
+
+The String `pseudo-class` can be augmented. We call it a pseudo-class because it does not create real mutable objects. Indeed strings are immutable.
+
+```javascript
+ String.prototype.trim = function() {
+    return this.replace(/^\s*|\s*$/, '');
+};
+
+' Ok then     '.trim(); // 'Ok then'
+
+Number.prototype.integer = function() {
+    return Math[this >= 0 ? 'floor' : 'ceil'](this);
+};
+
+(2.34).integer(); // 2
+(-Math.PI).integer(); // -3
+```
+
+
+
+## Functions
+
 
 - Functions are objects.
 - Functions are linked to `Function.prototype` (which is itself linked to `Object.prototype`).
@@ -527,10 +649,10 @@ In JavaSript, matching functions' declared argument during a call is not mandato
 ```javascript
 function f(a) {
     for (var i = 0; i < arguments.length; i++) {
-        console.log(i + "=>" + arguments[i]);
+        console.log(i + '=>' + arguments[i]);
     }
 }
-f("ok",false) //  0=>ok
+f('ok',false) //  0=>ok
 //  1=>false
 ```
 
@@ -557,11 +679,11 @@ the parameter `this` refers to the object that owns the method.
     x: 10,
     y: 10,
     toString: function() { /* definition of a method */
-        return "(" + this.x + ", " + this.y + ")";
+        return '(' + this.x + ', ' + this.y + ')';
     }
 };
 // invocation of 'toString' as a method
-p1.toString(); // "(10, 10)"
+p1.toString(); // '(10, 10)'
 ```
 
 ### Functions used as _functions_
@@ -569,9 +691,9 @@ p1.toString(); // "(10, 10)"
 If not bounded to an object, functions are bounded to the _global scope_. In that case, `this` refers to the global scope and not to the calling context.
 
 ```javascript
-var my_name_is = "This is global!";
+var my_name_is = 'This is global!';
 function f() {
-    var my_name_is = "This is local to f()";
+    var my_name_is = 'This is local to f()';
     function print_name() {
         console.log(this.my_name_is); // don't do that!
     }
@@ -586,7 +708,7 @@ f(); // 'This is global!'
 
 
 
-When used as a constructor, a function is called  a _Constructor Function_. By convention a CF has an upper cased first letter. _Constructor Functions_ are used in conjuction with the `new` operator. The `new` operator creates a fresh object and apply the CF to that object. The  `this` pointer refers to that new object. is meant to refer to the new object.
+When used as a constructor, a function is called  a _Constructor Function_. By convention a CF has an upper cased first letter. _Constructor Functions_ are used in conjunction with the `new` operator. The `new` operator creates a fresh object and apply the CF to that object. The  `this` pointer refers to that new object. is meant to refer to the new object.
 
 :warning: This function's `prototype` property is used to initialize the new object's _prototype link_.
 
@@ -598,7 +720,7 @@ If no return statement or if the function doesn't return an object, then this is
     this.y = y || 0;
 }
 Point.prototype.toString = function() {
-    return "("+ this.x + ", " + this.y + ")";
+    return '('+ this.x + ', ' + this.y + ')';
 };
 var p = new Point();
 ```
@@ -609,7 +731,7 @@ var p = new Point();
 
 Functions are objects, and objects can have functions (methods).  Then Functions have methods.
 
-Their exists a `Function` function. has it has a capital "F" you can guess it is a _Constructor Function_. The `Function.prototype` property is used as a _prototype link_ to any function.
+Their exists a `Function` function. has it has a capital 'F' you can guess it is a _Constructor Function_. The `Function.prototype` property is used as a _prototype link_ to any function.
 
  The `apply` method belongs to  `Function.prototype`. Following the prototype chain, any function can call  the `apply`  method.
 
@@ -617,8 +739,8 @@ Their exists a `Function` function. has it has a capital "F" you can guess it is
 
 ```javascript
 var weirdo = {
-    x: "\u03B1",
-    y: "\u03B2"
+    x: '\u03B1',
+    y: '\u03B2'
 }
 
 Point.prototype.toString.apply(weirdo); // '(α, β)'
@@ -626,15 +748,320 @@ p.toString.apply(weirdo); // '(α, β)'
 ```
 
 
+### IIFE Immediately Invoked Function Expressions
 
-Inheritance
------------
+Use immediately invoked function expressions to prevent polluting the global scope.
 
-Arrays
-------
+```javascript
+var a = 1;
+(function(){
+    var a = 0
+    console.log(a); // 0
+})();
+console.log(a); // 1
+```
 
-Regexp
-------
 
-JSON
-----
+
+
+## Exceptions
+
+ Exceptions are meant to interrupt abnormally behaving programs.
+
+- Thrown with the `throw` statement.
+- Caught with the `try` / `catch` statements.
+
+```javascript
+ function Point(x, y) {
+    if ((typeof x !== 'undefined' && typeof x !== 'number')
+    || (typeof y !== 'undefined'  && typeof y !== 'number')) {
+        throw { name: 'TypeError', message: ''Point' needs numbers' };
+    }
+    // ...
+}
+(function() {
+    try {
+        var weird = new Point('\u03B1', 0);
+    } catch (e) {
+        console.log(e.name + ': ' + e.message);
+    }
+})(); // TypeError: 'Point' needs numbers
+```
+
+
+## Recursion
+
+Possible but slow. No tail optimization for self calling functions.
+```javascript
+ function fib(n) {
+    if (n <= 2) {
+        return 1;
+    }
+    return fib(n - 1) + fib(n - 2);
+}
+```
+[Recursion demo on CodePen.](http://codepen.io/pigne/pen/edLBE)
+
+
+## Closure
+
+Functions have access to the variables and parameters of the function that defined them. They have access to the scope that was available during their creation.
+
+A function can be exported to another context (another scope) and still have access to its original scope.
+
+
+An inner function may live longer than its outer function.
+```javascript
+function f_outer() {
+    function f_inner() {
+        return 'Inner function';
+    }
+    return f_inner;
+}
+var f = f_outer(); // f_inner
+f(); // 'Inner function'
+```
+
+Inner functions encapsulate states of outer functions for a latter invocation.
+
+```javascript
+function increment() {
+    var counter = 0;
+    return function() {
+        counter = counter + 1;
+        return counter;
+    };
+}
+var my_increment = increment();
+my_increment(); // 1
+my_increment(); // 2
+my_increment(); // 3
+my_increment(); // 4
+counter; // undefined
+```
+
+### Closure to Hide Singletons
+
+```javascript
+function html_to_md() {
+    var tokens = {
+        'p': '\n',
+        '/p': '\n',
+        'h1': '# ',
+        '/h1': '\n',
+        // ...
+    };
+    return function(html) {
+        return html.replace(/<([^<>]+)>/g, function(a, b) {
+            var t = tokens[b];
+            return typeof t === 'string' ? t : a;
+        });
+    };
+}
+var parse = html_to_md();
+parse('<h1>My Title</h1><h2>Subtitle<...'); // # My Title\n ## Subtitle\n...
+```
+An extended example of [hidden singletons and utilities](http://codepen.io/pigne/pen/HtqjF).
+
+### Closure to Make Safe Objects
+
+By default, objects properties are always visible and writable. Inner Functions and closure can create objects with 'private' members.
+
+```javascript
+ function createPoint() {
+    var x = 0;
+    var y = 0;
+    // ...
+    return {
+        getX: function() {
+            return x;
+        },
+        setX: function(new_x) {
+            check_number(new_x);
+            x = new_x;
+        },
+        // ...
+    };
+}
+var p = createPoint(); // { getX: [Function], setX: [Function], ... }
+```
+`p` is a new object created without the 'new' operator.
+
+```javascript
+p.x; // undefined
+```
+`x` is not part of `p`'s inheritance chain but is accessible from `p`'s functions scope.
+
+```javascript
+p.getX(); // 0
+p.setY(-12);
+p.toString(); // '(0, -12)'
+```
+
+A complete example of [safe objects create with closure](http://codepen.io/pigne/pen/DsEnA).
+
+###Closure to Make Modules
+```javascript
+var prop;
+(function(global) {
+    global.MY_MODULE = global.MY_MODULE || {};
+    // private API
+    function hidden_function() {
+        console.log('You called a hidden function.');
+    }
+    // public API
+    global.MY_MODULE.publicFunction = function() {
+        console.log('Public function calling a hidden one...');
+        hidden_function();
+    };
+})(this);
+
+for (prop in MY_MODULE) {
+    console.log(prop);
+}
+MY_MODULE.publicFunction(); // Public function calling a hidden one...
+// You called an hidden function.
+```
+
+## Objects & Inheritance
+
+### Classical Pattern
+
+**Pros**:
+- It's the classical way to do. Easy to read and understand. Any JS developer knows it.
+**Cons**:
+- Manipulating _Constructor Functions_ and the `new` operator is risky.
+- All members are public.
+- Parameters and inheritance are problematic.
+
+```javascript
+ var p,
+    Point3D = function() {
+        this.z = 0;
+    };
+Point3D.prototype = new Point();
+Point3D.prototype.toString = function() {
+    return '(' + this.x + ', ' + this.y + ', ' + this.z + ')';
+};
+p = new Point3D();
+p.x = p.y = p.z = -3;
+p.toString(); // '(-1, -2, -3)';
+```
+A complete example of [Objects Inheritance with the Classical Pattern](http://codepen.io/pigne/pen/fkczG).
+
+
+### The ECMASript 5 Pattern
+
+[TODO]
+
+### The Differential Pattern
+
+Create new objects from existing ones.
+
+Specify differences from a base object in ordrer to specify (specialise) another one.
+
+**Pros**:
+
+- can hide Constructor Functions and new operators.
+
+**Cons**:
+
+- objects are linked (if base object changes, then inherited objects change too).
+
+```javascript
+function createObject(base) {      // Utility function to
+    function F() {};               // create objects with
+    F.prototype = base;            // 'base' as a prototype.
+    return new F();
+}
+var point = { x: 0, y: 0 },        // A 'base' object.
+p3d = createObject(point);         // New object with 'point' as its prototype.
+p3d.z = 0;                         // Differences from 'point'.
+p3d.toString = function() {
+    return '(' + this.x + ', ' + this.y + ', ' + this.z + ')';
+};
+p3d.toString(); // '(0, 0, 0)'
+```
+
+An example of [Object Inheritance with the differential pattern](http://codepen.io/pigne/pen/tLHFA).
+
+
+### The Functional Pattern
+
+Some classical function returns new objects with public methods in it.
+
+Public methods access hidden attributes thanks to closure.
+
+That function is called as a regular function (no `new` operator).
+
+```javascript
+var createPoint = function(attributes) {
+    attributes = attributes || {};
+    attributes.x = attributes.x || 0; // Hidden attributes, given as parameters.
+    attributes.y = attributes.y || 0;
+    // ...
+    var point = {}; // The new object to be returned.
+
+    point.toString = function() { // public methods accessing hidden parameters.
+        return '(' + attributes.x + ', ' + attributes.y + ')';
+    };
+    // ...
+    return point; // return the newly created object.
+};
+var p1 = createPoint({ x: -1, y: -4 });
+```
+
+
+
+Inheritance is simply done by:
+
+- using a create function into another,
+- sharing the attributes to initialize to new object.
+
+```javascript
+var createPoint3D = function(attributes) {
+    attributes = attributes || {};
+    attributes.z = attributes.z || 0;
+    var point3D = createPoint(attributes); // create a new object from upper hierarchy
+
+    point3D.toString = function() {
+        return '(' + attributes.x + ', ' + attributes.y + ', ' + attributes.z + ')';
+    };
+    // ...
+    return point3D;
+};
+var p3d = createPoint3D({ x: -3, y: -3, z: -4 });
+```
+
+An example of [Object Inheritance with the functionnal pattern](http://codepen.io/pigne/pen/EajDd).
+
+Code reuse or access to super members can be done with the apply invocation pattern.
+```javascript
+var createAugmentedPoint3D = function(attributes) {
+    attributes = attributes || {};
+    attributes.width = attributes.width || '1px';
+    attributes.color = attributes.color || '#00FF00';
+    var augmentedPoint3D = createPoint3D(attributes);
+    var superToString = augmentedPoint3D.toString;  /* Store the super toString
+                                                       method locally.*/
+
+    augmentedPoint3D.toString = function() {        /* Shadow super toString
+                                                       and call it with 'apply' */
+    return '{' + superToString.apply(augmentedPoint3D) + ', width:' +
+        attributes.width + ', color:' + attributes.color + '}';
+    };
+    return augmentedPoint3D;
+};
+var ap3d = createAugmentedPoint3D({ color: '#b3e4a2' });
+ap3d.toString(); // '{(0, 0, 0), width:1px, color:#b3e4a2}'
+```
+
+
+
+## Arrays
+
+
+## Regexp
+
+
+## JSON
